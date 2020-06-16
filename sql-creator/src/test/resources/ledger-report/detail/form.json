@@ -1,0 +1,107 @@
+[
+  {
+    "name": "/detailLedgerReport@detailLedgerList",
+    "parameter-prefix": "dll",
+    "type": "list",
+    "title": "detailLedgerReport.title",
+    "query-name": "select-detail-ledger-report",
+    "property-file-path": "actions/ledger-report/properties.properties",
+    "control-in-row": 4,
+    "separate-tab": true,
+    "initial-select": [
+      { "name": "natureList", "query-name": "select-nature" },
+      { "name": "yesNoList", "query-name": "select-yes-no" },
+      { "name": "fundList", "query-name": "select-fund-list" },
+      { "name": "branchList", "query-name": "select-branch-list" },
+      { "name": "generalLedgerList", "query-name": "select-general-ledger-list" },
+      { "name": "subsidiaryLedgerList", "query-name": "select-subsidiary-ledger-list" },
+      { "name": "detailLedgerClassList", "query-name": "select-detail-ledger-class-list" }
+    ],
+    "control": [
+      { "name": "fund-id", "title": "controls.funds", "type": "select", "items": "fundList", "option-value": "fundId", "option-title": "fundName", "select-default-item": "همه", "for-fund-type": "multi" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "start-date", "title": "controls.start-date", "type": "date", "required": true, "copy-on-blur": "end-date" },
+      { "name": "end-date", "title": "controls.end-date", "type": "date", "required": true },
+      { "name": "branch-id", "title": "controls.branches", "type": "select-multiple", "items": "branchList", "option-value": "branchId", "option-title": "branchName", "select-default-item": "همه" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "detail-class-id", "title": "controls.detail-class", "type": "select", "items": "detailLedgerClassList", "option-value": "dlClassId", "option-title": "dlClassName", "select-default-item": "همه" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "start-sl-number", "title": "controls.start-sl-number", "type": "number", "search-box": "SL", "copy-on-blur": "end-sl-number" },
+      { "name": "end-sl-number", "title": "controls.end-sl-number", "type": "number", "search-box": "SL" },
+      { "name": "start-dl-number", "title": "controls.start-dl-number", "type": "number", "search-box": "DL", "copy-on-blur": "end-dl-number" },
+      { "name": "end-dl-number", "title": "controls.end-dl-number", "type": "number", "search-box": "DL" },
+      { "name": "start-voucher-number", "title": "controls.start-voucher-number", "type": "number", "copy-on-blur": "end-voucher-number" },
+      { "name": "end-voucher-number", "title": "controls.end-voucher-number", "type": "number" },
+      { "name": "start-voucher-temp-number", "title": "controls.start-voucher-temp-number", "type": "number", "copy-on-blur": "end-voucher-temp-number" },
+      { "name": "end-voucher-temp-number", "title": "controls.end-voucher-temp-number", "type": "number" },
+      { "name": "nature-id", "title": "ماهيت سطر سند", "type": "select", "items": "natureList", "option-value": "id", "option-title": "title", "select-default-item": "هر دو" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "amount", "title": "مبلغ", "type": "number" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "has-voucher-line", "title": "گردش دارد", "type": "select", "items": "yesNoList", "option-value": "id", "option-title": "title", "select-default-item": "هر دو" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "comments", "title": "توضیحات", "type": "text" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "by-definitive-documents", "title": "اسناد قطعی", "type": "checkbox" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "by-previous-quotes", "title": "controls.by-previous-quotes", "type": "checkbox", "default": "checked" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "by-opening-quotes", "title": "با نقل افتتاحیه", "type": "checkbox", "default": "checked" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "by-closing-function", "title": "controls.by-closing-function", "type": "checkbox", "default": "checked" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "by-closing-quotes", "title": "با سند اختتامیه", "type": "checkbox" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "empty", "title": "empty", "type": "empty" },
+      { "name": "empty", "title": "empty", "type": "empty" }
+    ],
+    "button": [
+      { "name": "clear", "type": "reset", "title": "reset", "title-key": "button.reset" },
+      { "name": "submit", "type": "submit", "activities": [ "detail-ledger-report" ], "title": "search", "title-key": "button.search" }
+    ],
+    "print-button": [
+      { "title": "PDF", "activity-name": "createPdf", "image-src": "images/print.gif" },
+      { "title": "EXCEL", "activity-name": "createExcel", "image-src": "images/excel.gif" }
+    ],
+    "decorator": "org.broker.web.ledger.DetailLedgerReportDecorator",
+    "rowPerPageParamName": "rowPerPage",
+    "table-activity": "detail-ledger-report",
+    "columns": [
+      { "property": "voucherDate", "title": "voucher-date", "type": "date", "width": "1" },
+      { "property": "fundAbbreviation", "title": "نام صندوق", "type": "string", "width": "1", "for-fund-type": "multi" },
+      { "property": "voucherNumber", "title": "voucher-number", "type": "number", "width": "1" },
+      { "property": "voucherTempNumber", "title": "temp-number", "type": "number", "width": "1" },
+      { "property": "slName", "title": "معین", "type": "string", "width": "1" },
+      { "property": "comments", "title": "شرح", "type": "string", "width": "1", "tooltip": "true" },
+      { "property": "debitAmount", "title": "debit-amount", "type": "number", "width": "1" },
+      { "property": "creditAmount", "title": "credit-amount", "type": "number", "width": "1" },
+      { "property": "remainder", "title": "مانده", "type": "string", "width": "1" },
+      { "property": "status", "title": "ماهیت", "type": "string", "width": "1" },
+      { "property": "branchName", "title": "branch-name", "type": "string", "width": "1" }
+    ],
+    "footers": [
+      {
+        "order":  1,
+        "caption":  "footer.sum",
+        "columns": [
+          { "property": "debitAmount", "operation": "sum" },
+          { "property": "creditAmount", "operation": "sum" },
+          { "property": "remainder", "operation": "diff(debitAmount, creditAmount)" }
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "name": "detail-ledger-report",
+        "table-source-name": "select-detail-ledger-report",
+        "operations": [
+          { "order":  "1", "type": "function", "name": "createDetailLedgerMapList" }
+        ]
+      }
+    ]
+  }
+]

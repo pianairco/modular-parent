@@ -1,0 +1,661 @@
+[
+  {
+    "source-name": "select-branch-list",
+    "query-pattern": "select #columns# from b order by #orders#",
+    "sources": [
+      { "name": "branch", "alias": "b" }
+    ],
+    "columns": [
+      { "name": "b.branch_id", "as": "branchId", "type": "string" },
+      { "name": "b.branch_name", "as": "branchName", "type": "string" }
+    ],
+    "orders": [
+      { "by": "b.branch_id", "order": "asc" }
+    ]
+  },
+  {
+    "source-name": "select-fund-list",
+    "query-pattern": "select #columns# from f order by #orders#",
+    "sources": [
+      { "name": "fund", "alias": "f" }
+    ],
+    "columns": [
+      { "name": "f.fund_id", "as": "fundId", "type": "string" },
+      { "name": "f.fund_abbreviation", "as": "fundName", "type": "string" }
+    ],
+    "orders": [
+      { "by": "f.fund_id", "order": "asc" }
+    ]
+  },
+  {
+    "source-name": "select-general-ledger-list",
+    "query-pattern": "select #columns# from g order by #orders#",
+    "sources": [
+      { "name": "general_ledger", "alias": "g" }
+    ],
+    "columns": [
+      { "name": "g.gl_number", "as": "glNumber", "type": "string" },
+      { "name": "g.gl_name", "as": "glName", "type": "string" }
+    ],
+    "orders": [
+      { "by": "g.gl_number", "order": "asc" }
+    ]
+  },
+  {
+    "source-name": "select-subsidiary-ledger-list",
+    "query-pattern": "select #columns# from sl , gl where #clauses# order by #orders#",
+    "sources": [
+      { "name": "subsidiary_ledger", "alias": "sl" },
+      { "name": "general_ledger", "alias": "gl" }
+    ],
+    "columns": [
+      { "name": "sl.sl_id", "as": "slId", "type": "string" },
+      { "name": "sl.sl_number", "as": "slNumber", "type": "string" },
+      { "name": "sl.sl_name", "as": "slName", "type": "string" }
+    ],
+    "wheres":[
+      { "clause": "sl.gl_id = gl.gl_id", "conjunction": "and" },
+      { "clause": "gl.gl_number = $gl-number$", "conjunction": "" }
+    ],
+    "orders": [
+      { "by": "sl.sl_number", "order": "asc" }
+    ],
+    "params": [
+      { "name": "gl-number", "type": "number", "key": "gl-number" }
+    ]
+  },
+  {
+    "source-name": "select-detail-ledger-list",
+    "query-pattern": "select #columns# from dl order by #orders#",
+    "sources": [
+      { "name": "detail_ledger", "alias": "dl" }
+    ],
+    "columns": [
+      { "name": "dl.dl_id", "as": "dlId", "type": "string" },
+      { "name": "dl.dl_number", "as": "dlNumber", "type": "string" },
+      { "name": "dl.dl_name", "as": "dlName", "type": "string" }
+    ],
+    "orders": [
+      { "by": "dl.dl_number", "order": "asc" }
+    ]
+  },
+  {
+    "source-name": "select-detail-ledger-class-list",
+    "query-pattern": "select #columns# from dlc order by #orders#",
+    "sources": [
+      { "name": "detail_ledger_class", "alias": "dlc" }
+    ],
+    "columns": [
+      { "name": "dlc.dl_class_id", "as": "dlClassId", "type": "string" },
+      { "name": "dlc.dl_class_name", "as": "dlClassName", "type": "string" }
+    ],
+    "orders": [
+      { "by": "dlc.dl_class_id", "order": "asc" }
+    ]
+  },
+  {
+    "source-name": "select-yes-no-1",
+    "query-pattern": "select #columns# from a",
+    "sources": [
+      { "name": "dual", "alias": "a" }
+    ],
+    "columns": [
+      { "name": "'1'", "as": "id", "type": "string" },
+      { "name": "'بله'", "as": "title", "type": "string" }
+    ]
+  },
+  {
+    "source-name": "select-yes-no-2",
+    "query-pattern": "select #columns# from a",
+    "sources": [
+      { "name": "dual", "alias": "a" }
+    ],
+    "columns": [
+      { "name": "'0'", "as": "id", "type": "string" },
+      { "name": "'خیر'", "as": "title", "type": "string" }
+    ]
+  },
+  {
+    "source-name": "select-yes-no",
+    "query-pattern": "select #columns# from a union all b",
+    "sources": [
+      { "name": "select-yes-no-1", "alias": "a", "type": "source" },
+      { "name": "select-yes-no-2", "alias": "b", "type": "source" }
+    ],
+    "columns": [
+      { "name": "id", "as": "id", "type": "string" },
+      { "name": "title", "as": "title", "type": "string" }
+    ],
+    "orders": [
+      { "by": "id", "order": "asc" }
+    ]
+  },
+  {
+    "source-name": "select-nature-1",
+    "query-pattern": "select #columns# from a",
+    "sources": [
+      { "name": "dual", "alias": "a" }
+    ],
+    "columns": [
+      { "name": "'debit'", "as": "id", "type": "string" },
+      { "name": "'\u0628\u062f\u0647\u06a9\u0627\u0631'", "as": "title", "type": "string" }
+    ]
+  },
+  {
+    "source-name": "select-nature-2",
+    "query-pattern": "select #columns# from a",
+    "sources": [
+      { "name": "dual", "alias": "a" }
+    ],
+    "columns": [
+      { "name": "'credit'", "as": "id", "type": "string" },
+      { "name": "'\u0628\u0633\u062a\u0627\u0646\u06a9\u0627\u0631'", "as": "title", "type": "string" }
+    ]
+  },
+  {
+    "source-name": "select-nature",
+    "query-pattern": "select #columns# from a union all b",
+    "sources": [
+      { "name": "select-nature-1", "alias": "a", "type": "source" },
+      { "name": "select-nature-2", "alias": "b", "type": "source" }
+    ],
+    "columns": [
+      { "name": "id", "as": "id", "type": "string" },
+      { "name": "title", "as": "title", "type": "string" }
+    ],
+    "orders": [
+      { "by": "id", "order": "asc" }
+    ]
+  },
+  {
+    "source-name": "select-year-fund-fiscal-year",
+    "query-pattern": "select #columns# from fy where #clauses#",
+    "sources": [
+      { "name": "FISCAL_YEAR", "alias": "fy" }
+    ],
+    "columns": [
+      { "name": "fy.YEAR_ID", "as": "YEAR_ID", "type": "number" },
+      { "name": "fy.FUND_ID", "as": "FUND_ID", "type": "number" }
+    ],
+    "wheres": [
+      { "clause": "'$start-date$' between fy.START_DATE and fy.END_DATE", "conjunction": "" }
+    ],
+    "params": [
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "start-gl-number", "type": "number", "key": "start-gl-number" },
+      { "name": "end-gl-number", "type": "number", "key": "end-gl-number" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-previous-quotes-normal",
+    "query-pattern": "select #columns# from vm where #clauses#",
+    "sources": [
+      { "name": "vw_voucher_master", "alias": "vm" }
+    ],
+    "columns": [
+      { "name": "'NORMAL'", "as": "rec_type", "type": "string" },
+      { "name": "vm.fund_id", "as": "FUND_ID", "type": "number" },
+      { "name": "vm.voucher_id", "as": "voucher_id", "type": "number" },
+      { "name": "vm.voucher_date", "as": "voucher_date", "type": "date" },
+      { "name": "vm.branch_id", "as": "branch_id", "type": "number" },
+      { "name": "vm.voucher_number", "as": "voucher_number", "type": "number" },
+      { "name": "vm.voucher_temp_number", "as": "voucher_temp_number", "type": "number" },
+      { "name": "vm.voucher_type_id", "as": "voucher_type_id", "type": "number" },
+      { "name": "vm.voucher_status_id", "as": "voucher_status_id", "type": "number" }
+    ],
+    "wheres": [
+      { "clause": "(vm.year_id, vm.fund_id) in (SELECT year_id, fund_id FROM fiscal_year WHERE '$start-date$' BETWEEN start_date AND end_date)", "conjunction": "and" },
+      { "clause": "(voucher_type_id NOT IN (15, 18, 19, 20) OR (voucher_type_id = 18 AND (vm.year_id, vm.fund_id) not in (SELECT year_id, fund_id FROM fiscal_year fy WHERE '$start-date$' BETWEEN start_date AND end_date)))", "conjunction": "and" },
+      { "clause": "vm.voucher_date < '$start-date$'", "conjunction": "and" },
+      { "clause": "vm.fund_id in ($fund-id$)", "conjunction": "and" },
+      { "clause": "vm.branch_id in ($branch-id$)", "conjunction": "and" },
+      { "clause": "vm.voucher_number >= $start-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_number <= $end-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number >= $start-voucher-temp-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number <= $end-voucher-temp-number$", "conjunction": "" }
+    ],
+    "params": [
+      { "name": "fund-id", "type": "number", "key": "fund-id" },
+      { "name": "branch-id", "type": "number", "key": "branch-id" },
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "start-gl-number", "type": "number", "key": "start-gl-number" },
+      { "name": "end-gl-number", "type": "number", "key": "end-gl-number" },
+      { "name": "start-voucher-number", "type": "number", "key": "start-voucher-number" },
+      { "name": "end-voucher-number", "type": "number", "key": "end-voucher-number" },
+      { "name": "start-voucher-temp-number", "type": "number", "key": "start-voucher-temp-number" },
+      { "name": "end-voucher-temp-number", "type": "number", "key": "end-voucher-temp-number" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-previous-quotes-conditioned-1",
+    "query-pattern": "select #columns# from vm where #clauses#",
+    "sources": [
+      { "name": "vw_voucher_master", "alias": "vm" }
+    ],
+    "columns": [
+      { "name": "'CONDITIONED'", "as": "rec_type", "type": "string" },
+      { "name": "vm.fund_id", "as": "FUND_ID", "type": "number" },
+      { "name": "vm.voucher_id", "as": "voucher_id", "type": "number" },
+      { "name": "vm.voucher_date", "as": "voucher_date", "type": "date" },
+      { "name": "vm.branch_id", "as": "branch_id", "type": "number" },
+      { "name": "vm.voucher_number", "as": "voucher_number", "type": "number" },
+      { "name": "vm.voucher_temp_number", "as": "voucher_temp_number", "type": "number" },
+      { "name": "vm.voucher_type_id", "as": "voucher_type_id", "type": "number" },
+      { "name": "vm.voucher_status_id", "as": "voucher_status_id", "type": "number" }
+    ],
+    "wheres": [
+      { "clause": "(year_id, fund_id) in (SELECT year_id, fund_id FROM fiscal_year WHERE '$start-date$' BETWEEN start_date AND end_date)", "conjunction": "and" },
+      { "clause": "(vm.voucher_date < '$start-date$' or '$by-opening-quotes$' = '1')", "conjunction": "and" },
+      { "clause": "voucher_type_id IN (15, 20)", "conjunction": "and" },
+      { "clause": "vm.fund_id in ($fund-id$)", "conjunction": "and" },
+      { "clause": "vm.branch_id in ($branch-id$)", "conjunction": "and" },
+      { "clause": "vm.voucher_number >= $start-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_number <= $end-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number >= $start-voucher-temp-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number <= $end-voucher-temp-number$", "conjunction": "" }
+    ],
+    "params": [
+      { "name": "fund-id", "type": "number", "key": "fund-id" },
+      { "name": "branch-id", "type": "number", "key": "branch-id" },
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "by-opening-quotes", "type": "checkbox", "key": "by-opening-quotes" },
+      { "name": "start-gl-number", "type": "number", "key": "start-gl-number" },
+      { "name": "end-gl-number", "type": "number", "key": "end-gl-number" },
+      { "name": "start-voucher-number", "type": "number", "key": "start-voucher-number" },
+      { "name": "end-voucher-number", "type": "number", "key": "end-voucher-number" },
+      { "name": "start-voucher-temp-number", "type": "number", "key": "start-voucher-temp-number" },
+      { "name": "end-voucher-temp-number", "type": "number", "key": "end-voucher-temp-number" },
+      { "name": "by-closing-function", "type": "checkbox", "key": "by-closing-function" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-previous-quotes-conditioned-2",
+    "query-pattern": "select #columns# from vm where #clauses#",
+    "sources": [
+      { "name": "vw_voucher_master", "alias": "vm" }
+    ],
+    "columns": [
+      { "name": "'CONDITIONED'", "as": "rec_type", "type": "string" },
+      { "name": "vm.fund_id", "as": "FUND_ID", "type": "number" },
+      { "name": "vm.voucher_id", "as": "voucher_id", "type": "number" },
+      { "name": "vm.voucher_date", "as": "voucher_date", "type": "date" },
+      { "name": "vm.branch_id", "as": "branch_id", "type": "number" },
+      { "name": "vm.voucher_number", "as": "voucher_number", "type": "number" },
+      { "name": "vm.voucher_temp_number", "as": "voucher_temp_number", "type": "number" },
+      { "name": "vm.voucher_type_id", "as": "voucher_type_id", "type": "number" },
+      { "name": "vm.voucher_status_id", "as": "voucher_status_id", "type": "number" }
+    ],
+    "wheres": [
+      { "clause": "(year_id, fund_id) in (SELECT year_id, fund_id FROM fiscal_year WHERE '$start-date$' BETWEEN start_date AND end_date)", "conjunction": "and" },
+      { "clause": "voucher_type_id IN (18)", "conjunction": "and" },
+      { "clause": "vm.fund_id in ($fund-id$)", "conjunction": "and" },
+      { "clause": "vm.branch_id in ($branch-id$)", "conjunction": "and" },
+      { "clause": "vm.voucher_number >= $start-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_number <= $end-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number >= $start-voucher-temp-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number <= $end-voucher-temp-number$", "conjunction": "" }
+    ],
+    "params": [
+      { "name": "fund-id", "type": "number", "key": "fund-id" },
+      { "name": "branch-id", "type": "number", "key": "branch-id" },
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "start-gl-number", "type": "number", "key": "start-gl-number" },
+      { "name": "end-gl-number", "type": "number", "key": "end-gl-number" },
+      { "name": "start-voucher-number", "type": "number", "key": "start-voucher-number" },
+      { "name": "end-voucher-number", "type": "number", "key": "end-voucher-number" },
+      { "name": "start-voucher-temp-number", "type": "number", "key": "start-voucher-temp-number" },
+      { "name": "end-voucher-temp-number", "type": "number", "key": "end-voucher-temp-number" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-previous-quotes-conditioned-3",
+    "query-pattern": "select #columns# from vm where #clauses#",
+    "sources": [
+      { "name": "vw_voucher_master", "alias": "vm" }
+    ],
+    "columns": [
+      { "name": "'CONDITIONED'", "as": "rec_type", "type": "string" },
+      { "name": "vm.fund_id", "as": "FUND_ID", "type": "number" },
+      { "name": "vm.voucher_id", "as": "voucher_id", "type": "number" },
+      { "name": "vm.voucher_date", "as": "voucher_date", "type": "date" },
+      { "name": "vm.branch_id", "as": "branch_id", "type": "number" },
+      { "name": "vm.voucher_number", "as": "voucher_number", "type": "number" },
+      { "name": "vm.voucher_temp_number", "as": "voucher_temp_number", "type": "number" },
+      { "name": "vm.voucher_type_id", "as": "voucher_type_id", "type": "number" },
+      { "name": "vm.voucher_status_id", "as": "voucher_status_id", "type": "number" }
+    ],
+    "wheres": [
+      { "clause": "(year_id, fund_id) in (SELECT year_id, fund_id FROM fiscal_year WHERE '$start-date$' BETWEEN start_date AND end_date)", "conjunction": "and" },
+      { "clause": "voucher_type_id IN (19)", "conjunction": "and" },
+      { "clause": "vm.fund_id in ($fund-id$)", "conjunction": "and" },
+      { "clause": "vm.branch_id in ($branch-id$)", "conjunction": "and" },
+      { "clause": "vm.voucher_number >= $start-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_number <= $end-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number >= $start-voucher-temp-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number <= $end-voucher-temp-number$", "conjunction": "" }
+    ],
+    "params": [
+      { "name": "fund-id", "type": "number", "key": "fund-id" },
+      { "name": "branch-id", "type": "number", "key": "branch-id" },
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "start-gl-number", "type": "number", "key": "start-gl-number" },
+      { "name": "end-gl-number", "type": "number", "key": "end-gl-number" },
+      { "name": "start-voucher-number", "type": "number", "key": "start-voucher-number" },
+      { "name": "end-voucher-number", "type": "number", "key": "end-voucher-number" },
+      { "name": "start-voucher-temp-number", "type": "number", "key": "start-voucher-temp-number" },
+      { "name": "end-voucher-temp-number", "type": "number", "key": "end-voucher-temp-number" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-previous-quotes-normal-conditioned",
+    "query-pattern": "select #columns# from sn union all sc1 union all sc2 union all sc3",
+    "sources": [
+      { "name": "select-previous-quotes-normal", "alias": "sn", "type": "source" },
+      { "name": "select-previous-quotes-conditioned-1", "alias": "sc1", "type": "source" },
+      { "name": "select-previous-quotes-conditioned-2", "alias": "sc2", "type": "source" },
+      { "name": "select-previous-quotes-conditioned-3", "alias": "sc3", "type": "source" }
+    ],
+    "columns": [
+      { "name": "rec_type", "as": "rec_type", "type": "string" },
+      { "name": "fund_id", "as": "FUND_ID", "type": "number" },
+      { "name": "voucher_id", "as": "voucher_id", "type": "number" },
+      { "name": "voucher_date", "as": "voucher_date", "type": "date" },
+      { "name": "branch_id", "as": "branch_id", "type": "number" },
+      { "name": "voucher_number", "as": "voucher_number", "type": "number" },
+      { "name": "voucher_temp_number", "as": "voucher_temp_number", "type": "number" },
+      { "name": "voucher_type_id", "as": "voucher_type_id", "type": "number" },
+      { "name": "voucher_status_id", "as": "voucher_status_id", "type": "number" }
+    ],
+    "params": [
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "start-gl-number", "type": "number", "key": "start-gl-number" },
+      { "name": "end-gl-number", "type": "number", "key": "end-gl-number" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-previous-quotes-ledger",
+    "query-pattern": "select #columns# from vm , vl , sl where #clauses# group by #groups# ",
+    "sources": [
+      { "name": "select-previous-quotes-normal-conditioned", "alias": "vm", "type": "source" },
+      { "name": "voucher_line", "alias": "vl" },
+      { "name": "subsidiary_ledger", "alias": "sl" }
+    ],
+    "columns": [
+      { "name": "sl.gl_id", "as": "gl_id", "type": "number" },
+      { "name": "vl.dl_id", "as": "dl_id", "type": "number" },
+      { "name": "sl.sl_id", "as": "sl_id", "type": "number" },
+      { "name": "sl.sl_number", "as": "sl_number", "type": "number" },
+      { "name": "sum(CASE WHEN(voucher_type_id IN (15, 20) AND '$by-opening-quotes$' = '1') OR (voucher_date BETWEEN (select start_date from fiscal_year where '$start-date$' between start_date and end_date and fund_id = vm.fund_id) AND pkg_util.add_day_jalali ('$start-date$', -1)) THEN vl.debit_amount ELSE 0 END)", "as": "debit_amount", "type": "number" },
+      { "name": "sum(CASE WHEN(voucher_type_id IN (15, 20) AND '$by-opening-quotes$' = '1') OR (voucher_date BETWEEN (select start_date from fiscal_year where '$start-date$' between start_date and end_date and fund_id = vm.fund_id) AND pkg_util.add_day_jalali ('$start-date$', -1)) THEN vl.credit_amount ELSE 0 END)", "as": "credit_amount", "type": "number" },
+      { "name": "vm.fund_id", "as": "fund_id", "type": "number" }
+    ],
+    "wheres":[
+      { "clause": "'$by-previous-quotes$' = '1'", "conjunction": "and" },
+      { "clause": "vm.voucher_id = vl.voucher_id", "conjunction": "and" },
+      { "clause": "vl.sl_id = sl.sl_id", "conjunction": "and" },
+      { "clause": "((voucher_status_id IN (2, 3, 4, 5) and '$by-definitive-documents$' <> '1') or (voucher_status_id IN (4, 5) and '$by-definitive-documents$' = '1'))", "conjunction": "" }
+    ],
+    "groups": [
+      "gl_id",
+      "dl_id",
+      "sl.sl_id",
+      "sl_number",
+      "fund_id"
+    ],
+    "params": [
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "start-gl-number", "type": "number", "key": "start-gl-number" },
+      { "name": "end-gl-number", "type": "number", "key": "end-gl-number" },
+      { "name": "by-previous-quotes", "type": "checkbox", "key": "by-previous-quotes" },
+      { "name": "by-definitive-documents", "type": "checkbox", "key": "by-definitive-documents" },
+      { "name": "by-opening-quotes", "type": "checkbox", "key": "by-opening-quotes" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-previous-quotes-detail-ledger",
+    "query-pattern": "select #columns# from vm , vl , sl , dl where #clauses# group by #groups# ",
+    "sources": [
+      { "name": "select-previous-quotes-normal-conditioned", "alias": "vm", "type": "source" },
+      { "name": "voucher_line", "alias": "vl" },
+      { "name": "subsidiary_ledger", "alias": "sl" },
+      { "name": "detail_ledger", "alias": "dl" }
+    ],
+    "columns": [
+      { "name": "sl.gl_id", "as": "gl_id", "type": "number" },
+      { "name": "sl.sl_number", "as": "sl_number", "type": "number" },
+      { "name": "dl.dl_number", "as": "dl_number", "type": "number" },
+      { "name": "sum(CASE WHEN(voucher_type_id IN (15, 20) AND '$by-opening-quotes$' = '1') OR (voucher_date BETWEEN (select start_date from fiscal_year where '$start-date$' between start_date and end_date and fund_id = vm.fund_id) AND pkg_util.add_day_jalali ('$start-date$', -1)) THEN vl.debit_amount ELSE 0 END)", "as": "debit_amount", "type": "number" },
+      { "name": "sum(CASE WHEN(voucher_type_id IN (15, 20) AND '$by-opening-quotes$' = '1') OR (voucher_date BETWEEN (select start_date from fiscal_year where '$start-date$' between start_date and end_date and fund_id = vm.fund_id) AND pkg_util.add_day_jalali ('$start-date$', -1)) THEN vl.credit_amount ELSE 0 END)", "as": "credit_amount", "type": "number" },
+      { "name": "vm.fund_id", "as": "fund_id", "type": "number" }
+    ],
+    "wheres":[
+      { "clause": "'$by-previous-quotes$' = '1'", "conjunction": "and" },
+      { "clause": "vm.voucher_id = vl.voucher_id", "conjunction": "and" },
+      { "clause": "vl.sl_id = sl.sl_id", "conjunction": "and" },
+      { "clause": "vl.dl_id = dl.dl_id", "conjunction": "and" },
+      { "clause": "((voucher_status_id IN (2, 3, 4, 5) and '$by-definitive-documents$' <> '1') or (voucher_status_id IN (4, 5) and '$by-definitive-documents$' = '1'))", "conjunction": "" }
+    ],
+    "groups": [
+      "gl_id",
+      "sl_number",
+      "fund_id"
+    ],
+    "params": [
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "start-gl-number", "type": "number", "key": "start-gl-number" },
+      { "name": "end-gl-number", "type": "number", "key": "end-gl-number" },
+      { "name": "by-previous-quotes", "type": "checkbox", "key": "by-previous-quotes" },
+      { "name": "by-definitive-documents", "type": "checkbox", "key": "by-definitive-documents" },
+      { "name": "by-opening-quotes", "type": "checkbox", "key": "by-opening-quotes" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-normal",
+    "query-pattern": "select #columns# from vm where #clauses#",
+    "sources": [
+      { "name": "vw_voucher_master", "alias": "vm" }
+    ],
+    "columns": [
+      { "name": "vm.fund_id", "as": "FUND_ID", "type": "number" },
+      { "name": "vm.voucher_id", "as": "voucher_id", "type": "number" },
+      { "name": "vm.voucher_date", "as": "voucher_date", "type": "date" },
+      { "name": "vm.branch_id", "as": "branch_id", "type": "number" },
+      { "name": "vm.voucher_number", "as": "voucher_number", "type": "number" },
+      { "name": "vm.voucher_temp_number", "as": "voucher_temp_number", "type": "number" },
+      { "name": "vm.voucher_type_id", "as": "voucher_type_id", "type": "number" },
+      { "name": "vm.voucher_status_id", "as": "voucher_status_id", "type": "number" }
+    ],
+    "wheres": [
+      { "clause": "vm.fund_id in ($fund-id$)", "conjunction": "and" },
+      { "clause": "vm.branch_id in ($branch-id$)", "conjunction": "and" },
+      { "clause": "vm.voucher_number >= $start-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_number <= $end-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number >= $start-voucher-temp-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number <= $end-voucher-temp-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_date BETWEEN '$start-date$' AND '$end-date$'", "conjunction": "and" },
+      { "clause": "(voucher_type_id NOT IN (15, 18, 19, 20) OR (voucher_type_id = 18 AND (vm.year_id, vm.fund_id) not in (SELECT year_id, fund_id FROM fiscal_year fy WHERE '$end-date$' BETWEEN start_date AND end_date)))", "conjunction": "" }
+    ],
+    "params": [
+      { "name": "fund-id", "type": "number", "key": "fund-id" },
+      { "name": "branch-id", "type": "number", "key": "branch-id" },
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "start-gl-number", "type": "number", "key": "start-gl-number" },
+      { "name": "end-gl-number", "type": "number", "key": "end-gl-number" },
+      { "name": "start-voucher-number", "type": "number", "key": "start-voucher-number" },
+      { "name": "end-voucher-number", "type": "number", "key": "end-voucher-number" },
+      { "name": "start-voucher-temp-number", "type": "number", "key": "start-voucher-temp-number" },
+      { "name": "end-voucher-temp-number", "type": "number", "key": "end-voucher-temp-number" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-conditioned-1",
+    "query-pattern": "select #columns# from vm where #clauses#",
+    "sources": [
+      { "name": "vw_voucher_master", "alias": "vm" }
+    ],
+    "columns": [
+      { "name": "vm.fund_id", "as": "fund_id", "type": "number" },
+      { "name": "vm.voucher_id", "as": "voucher_id", "type": "number" },
+      { "name": "vm.voucher_date", "as": "voucher_date", "type": "date" },
+      { "name": "vm.branch_id", "as": "branch_id", "type": "number" },
+      { "name": "vm.voucher_number", "as": "voucher_number", "type": "number" },
+      { "name": "vm.voucher_temp_number", "as": "voucher_temp_number", "type": "number" },
+      { "name": "vm.voucher_type_id", "as": "voucher_type_id", "type": "number" },
+      { "name": "vm.voucher_status_id", "as": "voucher_status_id", "type": "number" }
+    ],
+    "wheres": [
+      { "clause": "vm.fund_id in ($fund-id$)", "conjunction": "and" },
+      { "clause": "vm.branch_id in ($branch-id$)", "conjunction": "and" },
+      { "clause": "vm.voucher_number <= $start-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_number >= $end-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number >= $start-voucher-temp-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number <= $end-voucher-temp-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_date between '$start-date$' and '$end-date$'", "conjunction": "and" },
+      { "clause": "vm.voucher_type_id IN (15, 20) and '$by-opening-quotes$' <> '1'", "conjunction": "and" },
+      { "clause": "(vm.year_id, vm.fund_id) in (SELECT year_id, fund_id FROM fiscal_year fy WHERE '$start-date$' BETWEEN start_date AND end_date)", "conjunction": "" }
+    ],
+    "params": [
+      { "name": "fund-id", "type": "number", "key": "fund-id" },
+      { "name": "branch-id", "type": "number", "key": "branch-id" },
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "by-opening-quotes", "type": "checkbox", "key": "by-opening-quotes" },
+      { "name": "start-voucher-number", "type": "number", "key": "start-voucher-number" },
+      { "name": "end-voucher-number", "type": "number", "key": "end-voucher-number" },
+      { "name": "start-voucher-temp-number", "type": "number", "key": "start-voucher-temp-number" },
+      { "name": "end-voucher-temp-number", "type": "number", "key": "end-voucher-temp-number" },
+      { "name": "by-closing-function", "type": "checkbox", "key": "by-closing-function" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-conditioned-2",
+    "query-pattern": "select #columns# from vm where #clauses#",
+    "sources": [
+      { "name": "vw_voucher_master", "alias": "vm" }
+    ],
+    "columns": [
+      { "name": "vm.fund_id", "as": "fund_id", "type": "number" },
+      { "name": "vm.voucher_id", "as": "voucher_id", "type": "number" },
+      { "name": "vm.voucher_date", "as": "voucher_date", "type": "date" },
+      { "name": "vm.branch_id", "as": "branch_id", "type": "number" },
+      { "name": "vm.voucher_number", "as": "voucher_number", "type": "number" },
+      { "name": "vm.voucher_temp_number", "as": "voucher_temp_number", "type": "number" },
+      { "name": "vm.voucher_type_id", "as": "voucher_type_id", "type": "number" },
+      { "name": "vm.voucher_status_id", "as": "voucher_status_id", "type": "number" }
+    ],
+    "wheres": [
+      { "clause": "vm.fund_id in ($fund-id$)", "conjunction": "and" },
+      { "clause": "vm.branch_id in ($branch-id$)", "conjunction": "and" },
+      { "clause": "vm.voucher_number >= $start-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_number <= $end-voucher-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number >= $start-voucher-temp-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_temp_number <= $end-voucher-temp-number$", "conjunction": "and" },
+      { "clause": "vm.voucher_date between '$start-date$' and '$end-date$'", "conjunction": "and" },
+      { "clause": "(vm.voucher_type_id IN (18, 19) and '$by-closing-quotes$' = '1')", "conjunction": "and" },
+      { "clause": "(vm.year_id, vm.fund_id) in (SELECT year_id, fund_id FROM fiscal_year fy WHERE '$end-date$' BETWEEN start_date AND end_date)", "conjunction": "" }
+    ],
+    "params": [
+      { "name": "fund-id", "type": "number", "key": "fund-id" },
+      { "name": "branch-id", "type": "number", "key": "branch-id" },
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "by-closing-quotes", "type": "checkbox", "key": "by-closing-quotes" },
+      { "name": "start-voucher-number", "type": "number", "key": "start-voucher-number" },
+      { "name": "end-voucher-number", "type": "number", "key": "end-voucher-number" },
+      { "name": "start-voucher-temp-number", "type": "number", "key": "start-voucher-temp-number" },
+      { "name": "end-voucher-temp-number", "type": "number", "key": "end-voucher-temp-number" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-conditioned",
+    "query-pattern": "select #columns# from c1 union all c2",
+    "sources": [
+      { "name": "select-conditioned-1", "alias": "c1", "type": "source" },
+      { "name": "select-conditioned-2", "alias": "c2", "type": "source" }
+    ],
+    "columns": [
+      { "name": "fund_id", "as": "fund_id", "type": "number" },
+      { "name": "voucher_id", "as": "voucher_id", "type": "number" },
+      { "name": "voucher_date", "as": "voucher_date", "type": "date" },
+      { "name": "branch_id", "as": "branch_id", "type": "number" },
+      { "name": "voucher_number", "as": "voucher_number", "type": "number" },
+      { "name": "voucher_temp_number", "as": "voucher_temp_number", "type": "number" },
+      { "name": "voucher_type_id", "as": "voucher_type_id", "type": "number" },
+      { "name": "voucher_status_id", "as": "voucher_status_id", "type": "number" }
+    ],
+    "params": [
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  },
+  {
+    "source-name": "select-normal-conditioned",
+    "query-pattern": "select #columns# from n union all c",
+    "sources": [
+      { "name": "select-normal", "alias": "n", "type": "source" },
+      { "name": "select-conditioned", "alias": "c", "type": "source" }
+    ],
+    "columns": [
+      { "name": "fund_id", "as": "fund_id", "type": "number" },
+      { "name": "voucher_id", "as": "voucher_id", "type": "number" },
+      { "name": "voucher_date", "as": "voucher_date", "type": "date" },
+      { "name": "branch_id", "as": "branch_id", "type": "number" },
+      { "name": "voucher_number", "as": "voucher_number", "type": "number" },
+      { "name": "voucher_temp_number", "as": "voucher_temp_number", "type": "number" },
+      { "name": "voucher_type_id", "as": "voucher_type_id", "type": "number" },
+      { "name": "voucher_status_id", "as": "voucher_status_id", "type": "number" }
+    ],
+    "params": [
+      { "name": "start-date", "type": "date", "key": "start-date" },
+      { "name": "end-date", "type": "date", "key": "end-date" },
+      { "name": "sortProperty", "type": "string", "key": "sort-property" },
+      { "name": "sortOrder", "type": "string", "key": "sort-order" },
+      { "name": "rowPerPage", "type": "string", "key": "page-size" }
+    ]
+  }
+]

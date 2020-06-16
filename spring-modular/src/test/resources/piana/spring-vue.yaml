@@ -1,0 +1,12 @@
+app:
+  spring:
+    bean-base-name: springVue
+    bean-package: ir.piana.business.simpleshop.action
+  vue:
+    load-from: resource
+    route:
+      /: root
+      /login: login
+      /proucts:
+        /book: book
+        /box: box
