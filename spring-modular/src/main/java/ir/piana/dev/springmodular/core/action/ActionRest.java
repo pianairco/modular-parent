@@ -1,18 +1,16 @@
 package ir.piana.dev.springmodular.core.action;
 
+import ir.piana.dev.springmodular.core.sql.SQLExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,13 +18,18 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-//@Controller
+@Controller
+@DependsOn("springVueResource")
 public class ActionRest {
-//    @Autowired
+    @Autowired
     private ApplicationContext сontext;
 
-//    @Autowired
+    @Autowired
+    @Qualifier("springVueResource")
     private SpringVueResource springVueResource;
+
+    @Autowired
+    private SQLExecutor sqlExecutor;
 
     @GetMapping(value = "/vu-app",
             produces = "text/javascript; charset=UTF-8")

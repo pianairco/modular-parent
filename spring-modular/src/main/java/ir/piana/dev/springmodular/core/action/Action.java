@@ -2,6 +2,7 @@ package ir.piana.dev.springmodular.core.action;
 
 import ir.piana.dev.springmodular.core.sql.SQLExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,10 +13,7 @@ import java.lang.reflect.Field;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public abstract class Action extends VueComponentProvider{
-    @Autowired
-    protected SQLExecutor sqlExecuter;
-
+public abstract class Action extends VueComponentProvider {
     public Function<RequestEntity, ResponseEntity> getField(String fieldName)
             throws NoSuchFieldException, IllegalAccessException {
         Field field = this.getClass().getField(fieldName);

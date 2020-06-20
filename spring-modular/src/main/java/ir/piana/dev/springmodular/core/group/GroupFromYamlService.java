@@ -18,7 +18,7 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GroupFromYamlService extends Action implements GroupProvider {
+public class GroupFromYamlService implements GroupProvider {
     private ObjectMapper yamlObjectMapper;
     private ObjectMapper objectMapper;
     private boolean debug;

@@ -1,6 +1,7 @@
 package ir.piana.dev.springmodular.core.sql;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,7 +13,8 @@ import javax.persistence.Query;
 import javax.sql.DataSource;
 import java.util.List;
 
-@Service("vueSqlExecuter")
+@Service("vueSqlExecutor")
+@Scope("singleton")
 public class VueSQLExecutor implements SQLExecutor {
     @Autowired
     private EntityManager entitManager;

@@ -22,4 +22,8 @@ abstract class VueComponentProvider {
         String html = "/" + pName.replaceAll("\\.", "\\/").concat("/").concat("store.vue.js");
         return IOUtils.toString(this.getClass().getResourceAsStream(html), "UTF-8");
     }
+
+    final VueApp getVueApp() {
+        return this.getClass().getDeclaredAnnotation(VueApp.class);
+    }
 }

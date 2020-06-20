@@ -19,14 +19,14 @@ public class ActionRegistryPostProcessor implements BeanDefinitionRegistryPostPr
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
             throws BeansException {
-        Map<String, Map.Entry<String, String>> beanMap = springVueResource.getBeanMap();
-        for(String key : beanMap.keySet()) {
-            RootBeanDefinition beanDefinition =
-                    new RootBeanDefinition(key);
-            registry.registerBeanDefinition(beanMap.get(key).getKey(), beanDefinition);
+        if(springVueResource.getBeanMap() != null) {
+            Map<String, Map.Entry<String, String>> beanMap = springVueResource.getBeanMap();
+            for (String key : beanMap.keySet()) {
+                RootBeanDefinition beanDefinition =
+                        new RootBeanDefinition(key);
+                registry.registerBeanDefinition(beanMap.get(key).getKey(), beanDefinition);
+            }
         }
-
-
 //        serviceDefinition.setTargetType(MyService.class); //The service interface
 //        serviceDefinition.setRole(BeanDefinition.ROLE_APPLICATION);
     }

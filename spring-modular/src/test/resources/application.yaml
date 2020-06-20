@@ -1,3 +1,6 @@
+spring:
+  main:
+    lazy-initialization: false
 server:
   port: 80
   servlet:

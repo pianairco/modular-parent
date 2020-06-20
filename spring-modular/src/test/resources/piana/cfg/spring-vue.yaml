@@ -1,0 +1,6 @@
+app:
+  spring:
+    bean-base-name: springVue
+    bean-package: ir.piana.business.componenttester.action
+  vue:
+    load-from: interface

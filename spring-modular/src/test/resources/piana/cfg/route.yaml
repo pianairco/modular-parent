@@ -1,0 +1,3 @@
+route:
+  /: $redirect-to(/root)
+  /root: firstComponent

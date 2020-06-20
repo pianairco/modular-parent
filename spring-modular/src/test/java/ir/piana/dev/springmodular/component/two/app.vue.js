@@ -12,11 +12,8 @@ Vue.component('$app$', {
     },
     methods: {
         x: function () {
-            axios.post('/action', this.user, {headers: {"action": "FirstAction", "activity": "x"}})
-                .then(function(response) {
-                    this.message = response.data;
-                    this.storeState.setState('twoComponent', {user: this.user})
-                })
+            axios.post('/action', this.user, {headers: {"action": "TwoAction", "activity": "x"}})
+                .then(function(response) { this.message = response.data; })
         .catch(function(err) { this.message = err; });
         }
     }
